@@ -82,25 +82,22 @@ enum PolyFillType { pftEvenOdd, pftNonZero, pftPositive, pftNegative };
 
 #endif
 
-struct IntPoint {
-  cInt X;
-  cInt Y;
-#ifdef use_xyz
-  cInt Z;
-  IntPoint(cInt x = 0, cInt y = 0, cInt z = 0): X(x), Y(y), Z(z) {};
-#else
-  IntPoint(cInt x = 0, cInt y = 0): X(x), Y(y) {};
-#endif
+template<typename T>
+struct Point2d
+{
+    Point2d();
+    Point2d(T X, T Y);
+    T X, Y;
 
-  friend inline bool operator== (const IntPoint& a, const IntPoint& b)
-  {
-    return a.X == b.X && a.Y == b.Y;
-  }
-  friend inline bool operator!= (const IntPoint& a, const IntPoint& b)
-  {
-    return a.X != b.X  || a.Y != b.Y; 
-  }
+    // NOTE: use_xyz is now broken.
+
+template<typename Ts>
+friend bool operator== (const Point2d<Ts>& l1, const Point2d<Ts>& l2);
+
+template<typename Ts>
+friend bool operator!= (const Point2d<Ts>& l1, const Point2d<Ts>& l2);
 };
+typedef Point2d<cInt> IntPoint;
 //------------------------------------------------------------------------------
 
 typedef std::vector< IntPoint > Path;
